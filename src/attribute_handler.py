@@ -6,7 +6,6 @@ import glob
 import os
 from constants import (DATA_DIR_PATH, DCM_EXT)
 
-
 class AttributeHandler:
     def __init__(self):
         pass

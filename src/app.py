@@ -1,4 +1,3 @@
-# from crypt import methods
 from flask import Flask, jsonify, request, send_from_directory
 from flask_swagger_ui import get_swaggerui_blueprint
 from file_service import FileService
