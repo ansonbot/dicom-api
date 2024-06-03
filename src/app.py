@@ -20,6 +20,7 @@ app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 
 @app.route("/")
 def home():
+    # endpoint to test if the API works
     return jsonify({
         "message": "App up and running successfully"
     })
@@ -27,6 +28,7 @@ def home():
 @app.route("/upload/dicom",methods=["POST"])
 def upload_dicom():
     file = request.files.get("file")
+    # get dicom file dataset for generating png
     dicom_ds = FileService.validate_dicom_file(file)
     if dicom_ds is not None:
         file_id = FileService.upload_dicom(file, dicom_ds)
@@ -42,7 +44,9 @@ def upload_dicom():
 def download_png(file_id):        
     try:
         file_dir, file_name = FileService.get_png_path(file_id)
+        # send image to client and display directly
         return send_from_directory(file_dir, file_name, as_attachment=False)
+    # file id not found
     except FileNotFoundError as e:
         err_msg = e.args[0] if len(e.args) > 0 else GENERIC_ERROR_MSG
         return jsonify({
@@ -54,6 +58,7 @@ def header_attribute():
     file_id = request.args.get('file_id', "")
     tag_group = request.args.get("tag_group", "")
     tag_element = request.args.get("tag_element", "")
+    # query string is incorrect
     if len(file_id) == 0 or len(tag_group) == 0 or len(tag_element) == 0:
         return jsonify({
             "error": "Invalid file id or tags"
@@ -64,11 +69,13 @@ def header_attribute():
             return jsonify({
                 "header_attribute": attr_dict
             }), 200
+        # file or tags not found
         except (FileNotFoundError, KeyError) as e:
             err_msg = e.args[0] if len(e.args) > 0 else GENERIC_ERROR_MSG
             return jsonify({
                 "error": err_msg
             }), 404
+        # just in case of any other errors
         except Exception as e:
             err_msg = e.args[0] if len(e.args) > 0 else GENERIC_ERROR_MSG
             return jsonify({

@@ -14,14 +14,18 @@ class AttributeHandler:
     @classmethod
     def process_data_element_value(cls, value):
         if isinstance(value, bytes):
+            # return base64 string instead of bytes
             return base64.b64encode(value).decode("utf-8")
         elif isinstance(value, pydicom.sequence.Sequence) and len(value) == 1:
+            # a DataElement's value could contain a DataSet
+            # return a list of header attribute dicts recursively
             ds = value[0]
             nested_header_attrs = []
             for data_elm in ds:
                 nested_header_attrs.append(cls.get_data_element_dict(data_elm))
             return nested_header_attrs
         else:
+            # return a string for values that are not yet defined
             return str(value)
 
     @classmethod
