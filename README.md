@@ -2,9 +2,10 @@
 
 ## Installation (Windows)
 
-1. Navigate to repo's root directory
-2. Set up Python virtual environment `python -m venv .venv`
-3. Install requirements `pip install -r requirements.txt` 
+1. Install Python. This repo was tested using version 3.10.6
+2. Navigate to repo's root directory
+3. Set up Python virtual environment `python -m venv .venv`
+4. Install requirements `pip install -r requirements.txt` 
 
 ## Run Local Flask Server
 
@@ -20,7 +21,7 @@
 
 Create `.vscode` folder, then add the following files:
 
-`launch.json`
+**launch.json**
 ```json
 {
     "version": "0.2.0",
@@ -36,7 +37,7 @@ Create `.vscode` folder, then add the following files:
     ]
 }
 ```
-`settings.json`
+**settings.json**
 ```json
 {
     "python.testing.pytestArgs": [
@@ -155,7 +156,7 @@ curl -X GET "http://localhost:5000/header_attribute?file_id={file_id}&tag_group=
 
 ## To Do List
 
-Because this repo is coding excercise, many features are not included. Here is a list of items that can be added to this Flask API:
+Because this repo is a coding excercise, many features are not included. Here is a list of items that can be added to this Flask API:
 
 - Security features, like authentication using JWT. A top priority for an API handling health care data. 
 - Use a database and object storage instead of local directory.
