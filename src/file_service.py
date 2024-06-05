@@ -39,7 +39,7 @@ class FileService:
 			png = ImageHandler.dicom_to_png(dicom_ds)
 			png_path = os.path.join(DATA_DIR_PATH, f"{file_name}{PNG_EXT}")
 			# save PNG file
-			png.save(png_path)	
+		    png.save(png_path)	
 		return uuid
 
 	@staticmethod
