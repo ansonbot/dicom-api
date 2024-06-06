@@ -1,5 +1,4 @@
 import os
-import io
 import glob
 import pydicom
 from pydicom.errors import InvalidDicomError
@@ -15,12 +14,12 @@ class FileService:
     @staticmethod
     def validate_dicom_file(file):
         if file is not None:
-            # create a copy of the file in memory buffer
-            file_bytes = io.BytesIO(file.read())
-            # point file's cursor back to 0 for file saving later 
-            file.seek(0)
             try:
-                return pydicom.dcmread(file_bytes)
+                # read DICOM file
+                dicom_ds = pydicom.dcmread(file)
+                # point file's cursor back to 0 for file saving later 
+                file.seek(0)
+                return dicom_ds
             except InvalidDicomError:
                 return None
         else:
